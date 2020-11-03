@@ -16,12 +16,15 @@ public class Pay {
     private String status;
 
     @PostPersist
-    public void onPostPersist(){
+    public void onPostPersist() {
         PayConfirmed payConfirmed = new PayConfirmed();
         BeanUtils.copyProperties(this, payConfirmed);
         payConfirmed.publishAfterCommit();
 
+    }
 
+    @PostUpdate
+    public void onPostUpdate() {
         PayCancelled payCancelled = new PayCancelled();
         BeanUtils.copyProperties(this, payCancelled);
         payCancelled.publishAfterCommit();
